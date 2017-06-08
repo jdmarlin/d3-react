@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import './bar-chart.css';
 
 class BarChart extends Component {
     constructor(props) {
@@ -27,12 +28,12 @@ class BarChart extends Component {
             dx = this.props.keys[0],
             dy = this.props.keys[1],
             dz = this.props.keys[2]
-            
+
         var entries = this.props.data;
 
         const data = d3.nest()
             .key(d => d[dx])
-            .rollup(d => d3.sum(d, g => -g[dy]))
+            .rollup(d => d3.sum(d, g => g[dy]))
             .entries(entries);
 
         const svg = chart.select('svg')
@@ -55,7 +56,7 @@ class BarChart extends Component {
                 Math.max(0, d3.max(data, d => d.value))
             ])
             .nice();
-        
+
         bars.selectAll('rect')
             .data(data)
             .enter()
@@ -67,7 +68,7 @@ class BarChart extends Component {
             .attr('height', d => Math.abs(y(d.value) - y(0)))
             .attr('fill', '#00BCD4')
             .on('mouseover', d => {
-               // add tooltip
+                // add tooltip
             })
             .on('mouseout', d => {
 
@@ -90,7 +91,7 @@ class BarChart extends Component {
 
         yAxis.select('path.domain')
             .remove();
-           
+
     }
 
     render() {

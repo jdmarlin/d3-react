@@ -1,0 +1,12 @@
+rect.bar {
+    cursor: pointer;
+    -webkit-transition: fill .2s;
+    -moz-transition: fill .2s;
+    -ms-transition: fill .2s;
+    -o-transition: fill .2s;
+    transition: fill .2s;
+}
+
+rect.bar:hover {
+    fill: #00E5FF;
+}
