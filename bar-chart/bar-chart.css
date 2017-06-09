@@ -1,7 +1,9 @@
 div.BarChart text {
-    font-size: 12px;
+    font-size: 16px;
     font-family: "Roboto", sans-serif;
-    fill: #333;
+}
+
+div.BarChart g.axis.x-axis > text {
     cursor: pointer;
 }
 
@@ -17,3 +19,33 @@ div.BarChart rect {
 div.BarChart rect:hover {
     fill: #80DEEA;
 }
+
+div.Tooltip {
+  position: fixed;
+  opacity: 0;
+  transition: opacity .15s;
+  transition-delay: .3s;
+  padding: .85rem;
+  border: 1px solid #bbb;
+  background: #fafafa;
+  overflow: visible;
+  white-space: nowrap;
+  /*z-index: 100;*/
+}
+
+div.Tooltip.show { 
+  z-index: 100;
+    
+  transition-delay: 0s;    
+    opacity: 1;
+}
+
+div.Tooltip span.dx{
+    font-size: .8rem;
+    color: #888;
+}
+
+div.Tooltip span.key {
+    font-weight: 700;
+}
+
