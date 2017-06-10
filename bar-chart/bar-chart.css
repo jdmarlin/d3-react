@@ -21,21 +21,19 @@ div.BarChart rect:hover {
 }
 
 div.Tooltip {
-  position: fixed;
-  opacity: 0;
-  transition: opacity .15s;
-  transition-delay: .3s;
-  padding: .85rem;
-  border: 1px solid #bbb;
-  background: #fafafa;
-  overflow: visible;
-  white-space: nowrap;
-  /*z-index: 100;*/
+    position: fixed;
+    opacity: 0;
+    transition: opacity .15s;
+    transition-delay: .3s;
+    padding: .85rem;
+    border: 1px solid #bbb;
+    background: #fafafa;
+    overflow: visible;
+    white-space: nowrap;
 }
 
 div.Tooltip.show { 
   z-index: 100;
-    
   transition-delay: 0s;    
     opacity: 1;
 }

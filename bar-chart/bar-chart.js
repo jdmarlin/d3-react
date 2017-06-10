@@ -29,7 +29,7 @@ class BarChart extends Component {
     tooltip(key, value, show) {
         const tooltip = d3.select(this.chart).select('div.Tooltip')
         tooltip.select('span.key').text(key)
-        tooltip.select('span.value').text(value.toLocaleString())
+        tooltip.select('span.value').text(value.toLocaleString();
      
         let w = tooltip.node().getBoundingClientRect().width
         let h = tooltip.node().getBoundingClientRect().height
@@ -38,10 +38,10 @@ class BarChart extends Component {
         let y = d3.event.pageY - h - 15;
         let y2 = d3.event.pageY - h - 60;
         if (show) {
-        tooltip.classed('show', true)
+            tooltip.classed('show', true)
 
-        tooltip.style('left', `${x}px`)
-        tooltip.transition().style('top', `${y}px`).duration(0)
+            tooltip.style('left', `${x}px`)
+            tooltip.transition().style('top', `${y}px`).duration(0)
         } else {
             tooltip.classed('show', false)
             tooltip.transition().delay(300).style('top', `${y2}px`).duration(150)
@@ -66,7 +66,7 @@ class BarChart extends Component {
         keys.forEach(key => {
             entries = entries.filter(d => this.props.filterState[key].indexOf(d[key]) > -1)
         })
-        
+
         const data = d3.nest()
             .key(d => d[dx])
             .rollup(d => d3.sum(d, g => g[dy]))
@@ -81,8 +81,8 @@ class BarChart extends Component {
 
         console.log(svg);
         const bars = svg.select('g.bars').selectAll('rect').data(data),
-         yAxis = svg.select('g.axis.y-axis'),
-         xAxis = svg.select('g.axis.x-axis')
+            yAxis = svg.select('g.axis.y-axis'),
+            xAxis = svg.select('g.axis.x-axis')
 
         const x = d3.scaleBand()
             .range([0, width])
@@ -113,8 +113,8 @@ class BarChart extends Component {
             .attr('height', 0)
             .attr('fill', '#00BCD4')
             .on('click', d => {
-                this.tooltip(d.key, d.value, 0);                
-                this.click({key: dx, value: d.key, ctrl: d3.event.ctrlKey});
+                this.tooltip(d.key, d.value, 0);
+                this.click({ key: dx, value: d.key, ctrl: d3.event.ctrlKey });
             })
             .on('mousemove', d => {
                 this.tooltip(d.key, d.value, 1);
@@ -137,7 +137,7 @@ class BarChart extends Component {
 
         xAxis.attr('transform', `translate(0, ${y(0)})`).transition().call(d3.axisBottom(x)
             .tickSize(0))
-            
+
         xAxis.on('click', d => {
             console.log(d3.event.target.innerHTML + dx)
         })
@@ -147,17 +147,17 @@ class BarChart extends Component {
             .ticks(5)
             .tickSize(-width)
             .tickFormat(d => {
-                    let s = d;
-                    let max = Math.max(Math.abs(y.domain()[0]), Math.abs(y.domain()[1]))
-                    if (max > 1e12) { s = d / 1e12 } else
+                let s = d;
+                let max = Math.max(Math.abs(y.domain()[0]), Math.abs(y.domain()[1]))
+                if (max > 1e12) { s = d / 1e12 } else
                     if (max > 1e9) { s = d / 1e9 } else
-                    if (max > 1e6) { s = d / 1e6 } else
-                    if (max > 1e3) { s = d / 1e3 } 
-                    return d3.format('.1f')(s);
-                }))
+                        if (max > 1e6) { s = d / 1e6 } else
+                            if (max > 1e3) { s = d / 1e3 }
+                return d3.format('.1f')(s);
+            }))
             .duration(150)
             .selectAll('line')
-            .attr('opacity', '0.5')       
+            .attr('opacity', '0.5')
             .style('stroke-dasharray', '2,2')
 
         yAxis.select('path.domain')
@@ -169,7 +169,7 @@ class BarChart extends Component {
         return (
             <div ref={chart => this.chart = chart} className="BarChart">
                 <div className="Tooltip">
-                    <span className="key"></span><br/>
+                    <span className="key"></span><br />
                     <span className="value"></span>
                 </div>
                 <svg>
