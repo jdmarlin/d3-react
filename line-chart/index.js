@@ -1,3 +1,3 @@
-import LineChart from './line-chart';
+import Chart from './line-chart';
 
-export default LineChart;
+export default Chart;

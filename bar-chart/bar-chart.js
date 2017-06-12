@@ -27,15 +27,16 @@ class BarChart extends Component {
     }
 
     tooltip(key, value, show) {
-        const tooltip = d3.select(this.chart).select('div.Tooltip')
-            .select('span.key').text(key)
-            .select('span.value').text(value.toLocaleString());
+        const tooltip = d3.select(this.chart).select('div.Tooltip');
+        tooltip.select('span.key').text(key);
+        tooltip.select('span.value').text(value.toLocaleString());
 
         const w = tooltip.node().getBoundingClientRect().width,
             h = tooltip.node().getBoundingClientRect().height,
             x = d3.event.pageX - (w / 2),
             y = d3.event.pageY - h - 15,
             y2 = d3.event.pageY - h - 60
+
         if (show) {
             tooltip.classed('show', true)
 
@@ -60,7 +61,8 @@ class BarChart extends Component {
             dz = this.props.keys[2]
 
         var entries = this.props.data;
-        var keys = Object.keys(this.props.filterState);
+
+        var keys = this.props.filterState ? Object.keys(this.props.filterState) : [];
 
         keys.forEach(key => {
             entries = entries.filter(d => this.props.filterState[key].indexOf(d[key]) > -1)
@@ -72,13 +74,10 @@ class BarChart extends Component {
             .entries(entries)
             .sort((a, b) => d3.ascending(a.value, b.value));
 
-        console.log(data);
-
         const svg = chart.select('svg')
             .attr('width', width + this.margin.left + this.margin.right)
             .attr('height', height + this.margin.top + this.margin.bottom);
 
-        console.log(svg);
         const bars = svg.select('g.bars').selectAll('rect').data(data),
             yAxis = svg.select('g.axis.y-axis'),
             xAxis = svg.select('g.axis.x-axis')
@@ -132,7 +131,7 @@ class BarChart extends Component {
             .attr('x2', width)
             .attr('y2', y(0))
             .style('stroke', 'black')
-            .style('stroke-width', 2);
+            .style('stroke-width', 1);
 
         xAxis.attr('transform', `translate(0, ${y(0)})`).transition().call(d3.axisBottom(x)
             .tickSize(0))
