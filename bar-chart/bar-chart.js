@@ -28,15 +28,14 @@ class BarChart extends Component {
 
     tooltip(key, value, show) {
         const tooltip = d3.select(this.chart).select('div.Tooltip')
-        tooltip.select('span.key').text(key)
-        tooltip.select('span.value').text(value.toLocaleString();
-     
-        let w = tooltip.node().getBoundingClientRect().width
-        let h = tooltip.node().getBoundingClientRect().height
+            .select('span.key').text(key)
+            .select('span.value').text(value.toLocaleString());
 
-        let x = d3.event.pageX - (w / 2);
-        let y = d3.event.pageY - h - 15;
-        let y2 = d3.event.pageY - h - 60;
+        const w = tooltip.node().getBoundingClientRect().width,
+            h = tooltip.node().getBoundingClientRect().height,
+            x = d3.event.pageX - (w / 2),
+            y = d3.event.pageY - h - 15,
+            y2 = d3.event.pageY - h - 60
         if (show) {
             tooltip.classed('show', true)
 
