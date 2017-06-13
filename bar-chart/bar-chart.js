@@ -26,7 +26,7 @@ class BarChart extends Component {
         }
     }
 
-    tooltip(key, value, show) {
+    tooltip(key, value = 0, show) {
         const tooltip = d3.select(this.chart).select('div.Tooltip');
         tooltip.select('span.key').text(key);
         tooltip.select('span.value').text(value.toLocaleString());
@@ -35,7 +35,7 @@ class BarChart extends Component {
             h = tooltip.node().getBoundingClientRect().height,
             x = d3.event.pageX - (w / 2),
             y = d3.event.pageY - h - 15,
-            y2 = d3.event.pageY - h - 60
+            y2 = d3.event.pageY - h - 30
 
         if (show) {
             tooltip.classed('show', true)
@@ -45,6 +45,7 @@ class BarChart extends Component {
         } else {
             tooltip.classed('show', false)
             tooltip.transition().delay(300).style('top', `${y2}px`).duration(150)
+            tooltip.transition().delay(450).style('top', '-99px').duration(0)
         }
     }
 
@@ -130,20 +131,38 @@ class BarChart extends Component {
             .attr('y1', y(0))
             .attr('x2', width)
             .attr('y2', y(0))
-            .style('stroke', 'black')
             .style('stroke-width', 1);
 
         xAxis.attr('transform', `translate(0, ${y(0)})`).transition().call(d3.axisBottom(x)
             .tickSize(0))
-
         xAxis.on('click', d => {
-            console.log(d3.event.target.innerHTML + dx)
+            var key = d3.event.target.innerHTML;
+            var value;
+            data.forEach(d => {
+                if (d.key === key) { value = d.value }
+            });
+            this.click({ key: dx, value: key, ctrl: d3.event.ctrlKey });
+            this.tooltip(key, value, 0);
+        }).on('mousemove', d => {
+            var key = d3.event.target.innerHTML;
+            var value;
+            data.forEach(d => {
+                if (d.key === key) { value = d.value }
+            });
+            this.tooltip(key, value, 1);
+        }).on('mouseout', d => {
+            var key = d3.event.target.innerHTML;
+            var value;
+            data.forEach(d => {
+                if (d.key === key) { value = d.value }
+            });
+            this.tooltip(key, value, 0);
         })
-
 
         yAxis.transition().call(d3.axisLeft(y)
             .ticks(5)
-            .tickSize(-width)
+            .tickSizeInner(-width)
+            .tickSizeOuter(0)
             .tickFormat(d => {
                 let s = d;
                 let max = Math.max(Math.abs(y.domain()[0]), Math.abs(y.domain()[1]))
@@ -155,12 +174,7 @@ class BarChart extends Component {
             }))
             .duration(150)
             .selectAll('line')
-            .attr('opacity', '0.5')
-            .style('stroke-dasharray', '2,2')
-
-        yAxis.select('path.domain')
-            .remove();
-
+            .attr('opacity', '.1')
     }
 
     render() {
